@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فاتوة</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+  body {
+      font-family: Arial, sans-serif;
+  }
+  input[type="text"],
+  input[type="number"],
+  button {
+      padding: 8px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+  }
+  table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+  th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+  }
+  th {
+      background-color: #f2f2f2;
+  }
+  button.delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+  }
+</style>
+<body>
+    <input type="text" id="search-input" placeholder="Enter barcode">
+    <button id="search-button">Search</button>
+<table id="product-table">
+  <thead>
+    <tr>
+      <th>الاسم</th>
+      <th>السعر</th>
+      <th>الكمية</th>
+      <th>الاجمالي</th>
+      <th>حذف</th>
+
+    </tr>
+  </thead>
+  <tbody id="product-body">
+    <!-- Table rows will be dynamically added here -->
+  </tbody>
+</table>
+
+<button id="send-data-btn">Send Data</button>
+<p>Total Grand: <span id="grand-total">0.00</span></p>
+
+<script>$(document).ready(function() {
+  // Function to calculate and update total cost
+  function updateTotalCost(row) {
+    var price = parseFloat(row.find('.editable[name="price"]').val());
+    var quantity = parseInt(row.find('.editable[name="quantity"]').val());
+    var totalCost = price * quantity;
+    row.find('.total-cost').text(totalCost.toFixed(2));
+    updateGrandTotal();
+  }
+
+  // Function to update grand total
+  function updateGrandTotal() {
+    var grandTotal = 0;
+    $('.total-cost').each(function() {
+      grandTotal += parseFloat($(this).text());
+    });
+    $('#grand-total').text(grandTotal.toFixed(2));
+  }
+
+  // Function to handle delete button click
+  function handleDeleteButtonClick() {
+    $(this).closest('tr').remove();
+    updateGrandTotal();
+  }
+
+  $('#search-button').click(function() {
+    var barcode = $('#search-input').val();
+    $.ajax({
+      type: 'GET',
+      url: '{% url 'get_data'%}',
+      data: {
+        'q': barcode
+      },
+      success: function(data) {
+        if (data.error) {
+          alert(data.error);
+        } else {
+          var newRow = $(`
+            <tr>
+              <td>${data.name}</td>
+              <td><input type="text" class="editable" name="price" value=${data.price} /></td>
+              <td><input type="number" class="editable" name="quantity" value=${data.quantity} /></td>
+              <td class="total-cost">${data.quantity * data.price}</td>
+              <td><button class="delete-btn">X</button></td>
+            </tr>
+          `);
+          $('#product-body').append(newRow);
+            
+          // Add event listener for editable fields
+          newRow.find('.editable').on('input', function() {
+            updateTotalCost(newRow);
+          });
+
+          // Add event listener for delete button
+          newRow.find('.delete-btn').click(handleDeleteButtonClick);
+
+          updateGrandTotal();
+        }
+      },
+      error: function(xhr, status, error) {
+        alert('Error occurred: ' + error);
+      }
+    });
+  });
+
+  // Function to send data to a different URL
+  $('#send-data-btn').click(function() {
+    var dataToSend = [];
+    $('#product-body tr').each(function() {
+      var rowData = {};
+      $(this).find('td').each(function(index) {
+        switch (index) {
+          case 0:
+            rowData.name = $(this).text();
+            break;
+          case 1:
+            rowData.price = parseFloat($(this).find('.editable[name="price"]').val());
+            break;
+          case 2:
+            rowData.quantity = parseInt($(this).find('.editable[name="quantity"]').val());
+            break;
+          case 3:
+            rowData.totalCost = parseFloat($(this).text());
+            break;
+        }
+      });
+      dataToSend.push(rowData);
+    });
+
+    // Include total grand in dataToSend
+    dataToSend.push({
+      totalGrand: parseFloat($('#grand-total').text())
+    });
+
+    var csrftoken = $('[name=csrfmiddlewaretoken]').val();
+    // Send data using AJAX
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'get_data'%}',
+      data: JSON.stringify(dataToSend), 
+      
+      contentType: 'application/json',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      },
+      success: function(response) {
+        alert('Data sent successfully!');
+        window.location.href = '{% url 'bell'%}';
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        var errorMessage = 'مشكلة في : ';
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+            errorMessage += xhr.responseJSON.error;
+        } else {
+            errorMessage += error;
+        }
+        alert(errorMessage);
+      }
+    });
+  });
+});
+
+</script>
+
+</body>
+</html>

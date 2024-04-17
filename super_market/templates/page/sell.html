@@ -1,0 +1,171 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+  
+    <title>اسم المحل</title>
+  
+  
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}" />
+  
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+  
+    <!-- font awesome style -->
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+  
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css'%}" rel="stylesheet" />
+  
+  </head>
+<style>
+  /* Style the form container */
+  #sell-form {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      margin: 0 auto;
+  }
+  
+  /* Style form input fields */
+  #sell-form div {
+      margin-bottom: 15px;
+  }
+  
+  label {
+      font-size: 20px; /* Increase font size */
+      font-weight: bold; /* Make the label text bold */
+      color: white; /* Set label text color to white */
+  }
+  
+  input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 100%;
+  }
+  
+  /* Style the submit button */
+  button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  /* Hover effect for the submit button */
+  button[type="submit"]:hover {
+      background-color: #0056b3;
+  }
+  
+</style>
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    
+        <div class="hero_area">
+          <header class="header_section">
+            <div class="container-fluid">
+              <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="{% url 'home'%}">
+                  <span>
+                   اسم السوبر ماركت
+                  </span>
+                </a>
+        
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class=""> </span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav  ml-auto">
+                  
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                         تسجيل الخروج
+                        </span>
+                      </a>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </header>
+        </div>
+    <!-- end header section -->
+    <!-- slider section -->
+    
+      <<form id="sell-form" action="{% url 'sell'%}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="barcode">الباركود:</label>
+            <input type="text" id="barcode" name="barcode" placeholder="الباركود">
+        </div>
+        <div>
+            <label for="quantity">الكمية:</label>
+            <input type="text" id="quantity" name="quantity" placeholder="الكمية">
+        </div>
+        <button type="submit" id="search-button">بيع</button>
+    </form>
+    
+       
+  </div>
+  
+
+
+
+   
+  
+  <!-- end expert section -->
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://html.design/">Eng Eslam Qadri</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js'%}"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+</html>

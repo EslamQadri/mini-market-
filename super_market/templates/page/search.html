@@ -1,0 +1,189 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+  
+    <title>اسم المحل</title>
+  
+  
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}" />
+  
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+  
+    <!-- font awesome style -->
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+  
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css'%}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="{% static 'css/responsive.css'%}" rel="stylesheet" />
+  
+  </head>
+  <style>
+    /* Style the search container */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Style the search form */
+    #search-form {
+        display: flex;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    /* Style the search input */
+    #search-input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+    }
+
+    /* Style the search button */
+    #search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    /* Hover effect for the search button */
+    #search-button:hover {
+        background-color: #0056b3;
+    }
+    /* Style the search result container */
+    .search-result {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    /* CSS styles for search result headings */
+    .search-result h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #fff; /* Set text color to white */
+  }
+  
+  /* CSS styles for search result subheadings */
+  .search-result h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #fff; /* Set text color to white */
+  }
+</style>
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    
+        <div class="hero_area">
+          <header class="header_section">
+            <div class="container-fluid">
+              <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="{% url 'home'%}">
+                  <span>
+                   اسم السوبر ماركت
+                  </span>
+                </a>
+        
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class=""> </span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav  ml-auto">
+                  
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                         تسجيل الخروج
+                        </span>
+                      </a>
+                    </li>
+                    
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </header>
+        </div>
+    <!-- end header section -->
+    <!-- slider section -->
+    <div class="search-container">
+      <form id="search-form" action="{% url 'search'%}" method="post">
+        {% csrf_token %}
+          <input type="text" id="search-input" name="q" placeholder="Search...">
+          <button type="submit" id="search-button">Search</button>
+      </form>
+     
+       
+  </div>
+  
+  {% if query %} 
+  <div class="search-result">
+    <h2 > اسم الصنف  :{{ query.name }} </h2>
+    <h2> {{ query.Quantity }}: الكمية</h2>
+    <h2> {{ query.sell_price }}: سعر البيع</h2>
+    {% else %}
+    <div class="search-result">
+      <h2>لا يوجد هذا الصنف في قاعدة البيانات</h2>
+  </div>
+  {% endif %}
+   
+  </div>
+
+
+   
+  
+  <!-- end expert section -->
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://html.design/">Eng Eslam Qadri</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js'%}"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ارجاع</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    #search-input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    #search-button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+    
+    th {
+        background-color: #f0f0f0;
+    }
+    
+    form {
+        margin-bottom: 20px;
+    }
+    
+    button {
+        padding: 8px 15px;
+        font-size: 14px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #c82333;
+    }
+    
+    button:focus {
+        outline: none;
+    }
+    
+</style>
+<body>
+    <form method = "get" action = "{% url 'return' %}">
+        {% csrf_token %}
+    <input type="text" id="search-input" placeholder="رقم الفاتورة" name = "code">
+    <button id="search-button">Search</button>
+    </form>
+    {% if order_data %}
+   
+    <table>
+        <thead>
+            <tr>
+              <th>اسم الصنف</th>
+              <th>العدد </th>
+              <th>السعر</th>
+              <th>ارجاع</th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            {%for i in order_data %}
+            <tr>
+                <td>{{i.product.name}}</td>
+                <td>{{i.quantity}}</td>
+                <td>{{i.total_cost}}</td>
+                <td>
+                    <form method="post" action="{% url 'return'%}">
+                        {% csrf_token %}
+                        <button type="submit" value= "{{ i.pk }}" name = "pk">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif%}
+    <table>
+</body>

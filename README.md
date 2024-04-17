@@ -24,7 +24,7 @@ The Mini Market Project is designed to help small businesses manage their sales 
 ## Installation and Usage
 
 1. Clone the repository: `git clone https://github.com/username/mini-market-project.git`
-2. Navigate to the project directory: `cd mini-market-project`
+2. Navigate to the project directory: `cd server`
 3. Set up the virtual environment: `pipenv install`
 4. Activate the virtual environment: `pipenv shell`
 5. Install required dependencies: `pipenv install -r requirements.txt`
@@ -41,4 +41,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Feel free to customize this README file to better suit your project's specific details and requirements.

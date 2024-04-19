@@ -28,6 +28,10 @@ class Product(models.Model):
     def __str__(self) -> str:
         return f"{self.name}"
 
+    class Meta:
+        verbose_name = "المنتج"
+        verbose_name_plural = "المنتج"
+
 
 class ProductHistory(Product):
     pass
@@ -45,6 +49,10 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f"{self.pk } {self.total_oreders}"
+
+    class Meta:
+        verbose_name = "الاوردر"
+        verbose_name_plural = "الاوردر"
 
 
 class OrderItem(models.Model):
@@ -68,3 +76,7 @@ class OrderItem(models.Model):
 
     def __str__(self) -> str:
         return f" {self.pk} { self.total_cost}"
+
+    class Meta:
+        verbose_name = "عناصر الاوردر "
+        verbose_name_plural = "عناصر الاوردر"

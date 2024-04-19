@@ -33,8 +33,26 @@ class Product(models.Model):
         verbose_name_plural = "المنتج"
 
 
-class ProductHistory(Product):
-    pass
+class ProductHistory(models.Model):
+    name = models.CharField("اسم الصنف ", max_length=200)
+    sell_price = models.DecimalField("سعر البيع ", max_digits=6, decimal_places=2)
+    buy_price = models.DecimalField("سعر الشراء ", max_digits=6, decimal_places=2)
+    Quantity = models.PositiveBigIntegerField(
+        "الكميه",
+    )
+    # make bar code unice
+    barcode = models.CharField(
+        "باركود", max_length=50, blank=True, null=True, unique=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.pk } {self.name } {self.barcode}"
+
+    class Meta:
+        verbose_name = "تتبع المنتجات"
+        verbose_name_plural = "تتبع المنتجات"
 
 
 class Order(models.Model):

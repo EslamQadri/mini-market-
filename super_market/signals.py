@@ -13,16 +13,3 @@ def tracking_products(sender, instance, created, **kwargs):
             Quantity=instance.Quantity,
             barcode=instance.barcode,
         )
-
-    else:
-
-        ProductHistory.objects.update_or_create(
-            name=instance.name,
-            barcode=instance.barcode,
-            defaults={
-                "name": instance.name,
-                "sell_price": instance.sell_price,
-                "buy_price": instance.buy_price,
-                "Quantity": instance.Quantity,
-            },
-        )
